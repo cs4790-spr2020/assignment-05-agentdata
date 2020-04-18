@@ -1,0 +1,17 @@
+﻿@page
+@model BlabberApp.Client.RegistrationModel
+@using BlabberApp.Services
+@inject IUserService UserService
+@{
+    ViewData["Registration"] = "New User Registration";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div id="registrationForm">
+    <form method="post">
+        <label>Email</label>
+        <input type="email" name="emailaddress">
+        <input type="submit">
+    </form>
+</div>
