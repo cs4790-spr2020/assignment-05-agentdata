@@ -35,7 +35,7 @@ namespace BlabberApp.Domain.Entities
             this.Id = Guid.NewGuid();
         }
         public Guid Id { get; set; }
-        public DateTime DTTM { get; }
+        public DateTime DTTM { get; set;}
         public string Message { get; set; }
         public User User { get; set; }
         public bool IsValid()
