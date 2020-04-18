@@ -6,12 +6,10 @@
 @{
     ViewData["Title"] = "Users";
 }
-<form id="removeUser" method="post" >
-</form>
 
 <h1>@ViewData["Title"]</h1>
 <p>
     @foreach (@User user in @UserService.GetAll()) {
-        <li>@user.Email.ToString() - <button type="submit" form="removeUser" value=@user.Email.ToString()>Delete</button></li>
+        <li>@user.Email.ToString() - </li>
     }
 </p>

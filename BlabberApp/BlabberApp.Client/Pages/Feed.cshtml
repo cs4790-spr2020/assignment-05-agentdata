@@ -1,6 +1,24 @@
 ﻿@page
 @model BlabberApp.Client.FeedModel
+@using BlabberApp.Domain.Entities
+@using BlabberApp.Services
+@inject IBlabService BlabService
 @{
     ViewData["Feed"] = "Blab Feed";
 }
 
+<form method="post">
+        <label>Blab</label><input type="text" name="message">
+        <label>Email</label><input type="email" name="emailaddress">
+        </br><input type="submit">
+    </form>
+
+
+<section id="main">
+    <h1>Feed</h1>
+    <div id="content">
+        @foreach (@Blab blab in @BlabService.GetAll()) {
+            <li>@blab.Message.ToString() - @blab.User.Email.ToString()</li>
+        } 
+    </div>
+</section>

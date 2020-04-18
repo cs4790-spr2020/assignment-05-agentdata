@@ -33,6 +33,13 @@ namespace BlabberApp.Client
 
             services.AddSingleton<IUserService>(s => userService);
 
+            BlabServiceFactory blabServiceFactory = new BlabServiceFactory();
+            IBlabPlugin blabPlugin = blabServiceFactory.CreateBlabPlugin("mysql");
+            BlabAdapter blabAdapter = blabServiceFactory.CreateBlabAdapter(blabPlugin);
+            BlabService blabService = blabServiceFactory.CreateBlabService(blabAdapter);
+
+            services.AddSingleton<IBlabService>(s => blabService);
+
             services.AddRazorPages();
         }
 
