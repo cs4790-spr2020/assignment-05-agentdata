@@ -404,4 +404,7 @@ BlabberApp.Services/obj/Debug/netstandard2.0/BlabberApp.Services.AssemblyInfo.cs
 BlabberApp.Services/obj/Debug/netstandard2.0/BlabberApp.Services.AssemblyInfoInputs.cache
 BlabberApp.Services/obj/Debug/netstandard2.0/BlabberApp.Services.assets.cache
 BlabberApp.Services/obj/Debug/netstandard2.0/BlabberApp.Services.csprojAssemblyReference.cache
-tools\*
+*/tools/
+
+*TestResults.info
+
