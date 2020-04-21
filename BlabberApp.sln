@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlabberApp.DataStore", "Bla
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlabberApp.DataStoreTest", "BlabberApp.DataStoreTest\BlabberApp.DataStoreTest.csproj", "{7FB3EBFF-61CB-4E2C-A2BB-744436FF31DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlabberApp.WebApi", "BlabberApp.WebApi\BlabberApp.WebApi.csproj", "{74E38DE9-CDDF-49D4-9E82-DD9B49EAF8F5}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlabberApp.DomainTest", "BlabberApp.DomainTest\BlabberApp.DomainTest.csproj", "{F40F9E90-CF40-41F9-A6F9-3DDCE25A517F}"
 EndProject
 Global

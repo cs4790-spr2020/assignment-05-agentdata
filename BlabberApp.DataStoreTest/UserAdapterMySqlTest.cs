@@ -21,7 +21,7 @@ namespace BlabberApp.DataStoreTest
         [TestCleanup]
         public void TearDown()
         {
-            _harness.Remove(new User(_email));
+            _harness.Remove(new User("Jackson@mississippi.com"));
         }
 
         [TestMethod]
