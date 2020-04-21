@@ -12,18 +12,16 @@ namespace BlabberApp.DataStoreTest
     {
         private User _user;
         private UserAdapter _harness = new UserAdapter(new MySqlUser());
-        private readonly string _email = "Jackson@mississippi.com";
 
         [TestInitialize]
         public void Setup()
         {
-            _user = new User(_email);
+            _user = new User("Jackson@mississippi.com");
         }
         [TestCleanup]
         public void TearDown()
         {
-            User user = new User(_email);
-            _harness.Remove(user);
+            _harness.Remove(new User(_email));
         }
 
         [TestMethod]
@@ -44,8 +42,9 @@ namespace BlabberApp.DataStoreTest
             User actual = _harness.GetById(_user.Id);
 
             //Assert
-            Assert.AreEqual(_user.Id, actual.Id);
+            Assert.AreEqual(_user.Id.ToString(), actual.Id.ToString());
         }
+
         [TestMethod]
         public void TestAddAndGetAll()
         {
@@ -56,7 +55,8 @@ namespace BlabberApp.DataStoreTest
 
             //Act
             ArrayList users = (ArrayList)_harness.GetAll();
-            User actual = (User)users[0];
+            //get the last user added to the db by grabbing the user at the last index of the users array
+            User actual = (User)users[users.Count-1];
 
             //Assert
             Assert.AreEqual(_user.Id.ToString(), actual.Id.ToString());

@@ -47,32 +47,6 @@ namespace BlabberApp.DataStore.Plugins
             }
         }
 
-        public IEnumerable ReadAll()
-        {
-            try
-            {
-                string sql = "SELECT * FROM users";
-                MySqlDataAdapter daUser = new MySqlDataAdapter(sql, _dcUser); // To avoid SQL injection.
-                MySqlCommandBuilder cbUser = new MySqlCommandBuilder(daUser);
-                DataSet dsUsers = new DataSet();
-
-                daUser.Fill(dsUsers, "users");
-
-                ArrayList users = new ArrayList();
-
-                foreach (DataRow row in dsUsers.Tables[0].Rows)
-                {
-                    users.Add(DataRow2User(row));
-                }
-
-                return users;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.ToString());
-            }
-        }
-
         public IEntity ReadById(Guid Id)
         {
             try
@@ -93,6 +67,7 @@ namespace BlabberApp.DataStore.Plugins
                 throw new Exception(ex.ToString());
             }
         }
+
         public IEntity ReadByUserEmail(string Id)
         {
             try
@@ -107,6 +82,32 @@ namespace BlabberApp.DataStore.Plugins
                 DataRow row = dsUser.Tables[0].Rows[0];
                 
                 return DataRow2User(row);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+        }
+
+        public IEnumerable ReadAll()
+        {
+            try
+            {
+                string sql = "SELECT * FROM users";
+                MySqlDataAdapter daUser = new MySqlDataAdapter(sql, _dcUser); // To avoid SQL injection.
+                MySqlCommandBuilder cbUser = new MySqlCommandBuilder(daUser);
+                DataSet dsUsers = new DataSet();
+
+                daUser.Fill(dsUsers, "users");
+
+                ArrayList users = new ArrayList();
+
+                foreach (DataRow row in dsUsers.Tables[0].Rows)
+                {
+                    users.Add(DataRow2User(row));
+                }
+
+                return users;
             }
             catch (Exception ex)
             {
