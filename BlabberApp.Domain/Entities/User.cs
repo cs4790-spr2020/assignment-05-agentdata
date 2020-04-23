@@ -13,18 +13,25 @@ namespace BlabberApp.Domain.Entities
         public User()
         {
             this.Id = Guid.NewGuid();
+            RegisterDTTM = System.DateTime.Now;
+            LastLoginDTTM = System.DateTime.Now;
         }
 
         public User(string email)
         {
             this.Id = Guid.NewGuid();
             this.ChangeEmail(email); 
+            RegisterDTTM = System.DateTime.Now;
+            LastLoginDTTM = System.DateTime.Now;
+
         }
 
         public void ChangeEmail(string email)
         {
             if (string.IsNullOrWhiteSpace(email) || email.Length > 50)
-                throw new FormatException("Email is invalid");
+                throw new FormatException(email+" is invalid");
+            else
+                Email = email;
             try
             {
                 MailAddress m = new MailAddress(email); 
@@ -33,13 +40,13 @@ namespace BlabberApp.Domain.Entities
             {
                 throw new FormatException(email + " is invalid");
             }
-            Email = email;
+            
         }
         public bool IsValid()
         {
             if (this.Id == null) throw new ArgumentNullException();
             if (this.Email == null) throw new ArgumentNullException();
-            if (this.Email.ToString() == "") throw new FormatException();
+            if (this.Email == "") throw new FormatException();
             if (this.LastLoginDTTM == null) throw new ArgumentNullException();
             if (this.RegisterDTTM == null) throw new ArgumentNullException();
             return true;

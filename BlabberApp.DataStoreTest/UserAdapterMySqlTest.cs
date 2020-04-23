@@ -16,50 +16,63 @@ namespace BlabberApp.DataStoreTest
         [TestInitialize]
         public void Setup()
         {
-            _user = new User("Jackson@mississippi.com");
+            _user = new User("testUserAdapter@test.com");
+            _user.RegisterDTTM = DateTime.Now;
+            _user.LastLoginDTTM = DateTime.Now;
         }
+
         [TestCleanup]
         public void TearDown()
         {
-            _harness.Remove(new User("Jackson@mississippi.com"));
-        }
-
-        [TestMethod]
-        public void Canary()
-        {
-            Assert.AreEqual(true, true);
+            _harness.Remove(_user);
         }
 
         [TestMethod]
         public void TestAddAndGetUser()
         {
-            //Arrange
-            _user.RegisterDTTM =DateTime.Now;
-            _user.LastLoginDTTM = DateTime.Now;
-
-            //Act
+            //Add user to DB
             _harness.Add(_user);
+
+            //Retrieve user from DB by Guid Id
             User actual = _harness.GetById(_user.Id);
 
-            //Assert
+            //Assert IDs and Email match
             Assert.AreEqual(_user.Id.ToString(), actual.Id.ToString());
+            Assert.AreEqual(_user.Email, actual.Email);
         }
 
         [TestMethod]
         public void TestAddAndGetAll()
         {
-            //Arrange
-            _user.RegisterDTTM = DateTime.Now;
-            _user.LastLoginDTTM = DateTime.Now;
+            //Add user to DB
             _harness.Add(_user);
 
-            //Act
+            //Retrieve all users
             ArrayList users = (ArrayList)_harness.GetAll();
+
             //get the last user added to the db by grabbing the user at the last index of the users array
             User actual = (User)users[users.Count-1];
 
-            //Assert
+            //Assert IDs and Email match
             Assert.AreEqual(_user.Id.ToString(), actual.Id.ToString());
+            Assert.AreEqual(_user.Email, actual.Email);
+        }
+
+        [TestMethod]
+        public void TestUpdate()
+        {
+            //Add user to DB
+            _harness.Add(_user);
+
+            //Update user email
+            _harness.UpdateEmailById(_user.Id, "new-testUpdate@test.com");
+
+            //Retrieve record from db by Guid Id
+            User _modifiedUser = _harness.GetById(_user.Id);
+
+            //Assert
+            Assert.AreNotEqual(_modifiedUser.Email.ToString(), _user.Email.ToString());
+            Assert.AreEqual(_modifiedUser.Email.ToString(), "new-testUpdate@test.com");
         }
     }
 }

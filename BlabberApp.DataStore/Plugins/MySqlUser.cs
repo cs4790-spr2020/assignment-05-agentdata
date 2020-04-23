@@ -115,16 +115,21 @@ namespace BlabberApp.DataStore.Plugins
             }
         }
 
-        public void Update(IEntity obj)
+        public void UpdateEmailById(Guid Id, String Email)
         {
-            User user = (User)obj;
+            try{
+                string sql = "UPDATE users SET email = '"+Email+"' WHERE users.sys_id='"+Id.ToString()+"'";
+                MySqlCommand cmd = new MySqlCommand(sql, _dcUser);
+                cmd.ExecuteNonQuery();
+            } catch(Exception ex) {
+                throw new Exception(ex.ToString());
+            }
         }
 
-        public void Delete(IEntity obj)
+        public void Delete(Guid Id)
         {
-            User user = (User)obj;
             try{
-                string sql = "DELETE FROM users WHERE users.email='"+user.Email+"'";
+                string sql = "DELETE FROM users WHERE users.sys_id='"+Id.ToString()+"'";
                 MySqlCommand cmd = new MySqlCommand(sql, _dcUser);
                 cmd.ExecuteNonQuery();
             } catch(Exception ex) {

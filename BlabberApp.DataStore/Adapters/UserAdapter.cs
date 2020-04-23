@@ -21,12 +21,12 @@ namespace BlabberApp.DataStore.Adapters
 
        public void Remove(User user)
        {
-           _plugin.Delete(user);
+           _plugin.Delete(user.Id);
        }
 
-       public void Update(User user)
+       public void UpdateEmailById(Guid Id, String email)
        {
-           _plugin.Update(user);
+           _plugin.UpdateEmailById(Id, email);
        }
 
        public IEnumerable GetAll()

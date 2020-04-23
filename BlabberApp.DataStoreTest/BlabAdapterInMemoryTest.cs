@@ -7,7 +7,7 @@ using BlabberApp.Domain.Entities;
 namespace BlabberApp.DataStoreTest
 {
     [TestClass]
-    public class BlabAdapter_MySql_UnitTests
+    public class BlabAdapter_InMemory_UnitTests 
     {
         private Blab _testBlab;
         private string _testEmail;

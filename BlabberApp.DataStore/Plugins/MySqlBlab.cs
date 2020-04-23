@@ -23,12 +23,17 @@ namespace BlabberApp.DataStore.Plugins
                 throw new Exception(ex.ToString());
             }
         }
-        public void Close() {
+
+        public void Close()
+        {
             this.dcBlab.Close();
         }
-        public void Create(IEntity obj) {
+
+        public void Create(IEntity obj)
+        {
             Blab blab = (Blab)obj;
-            try {
+            try
+            {
                 DateTime now = DateTime.Now;
                 string sql = "INSERT INTO blabs (sys_id, message, dttm_created, user_id) VALUES ('"
                      + blab.Id + "', '"
@@ -37,13 +42,17 @@ namespace BlabberApp.DataStore.Plugins
                      + blab.User.Email + "')";
                 MySqlCommand cmd = new MySqlCommand(sql, this.dcBlab);
                 cmd.ExecuteNonQuery();
-            } catch (Exception ex) {
+            } 
+            catch (Exception ex)
+            {
                 throw new Exception(ex.ToString());
             }
         }
 
-        public IEnumerable ReadAll() {
-            try {
+        public IEnumerable ReadAll()
+        {
+            try
+            {
                 // SELECT * FROM blabs WHERE blabs.dttm_created NOT over a week ago SORTED DESC BY blabs.dttm_created
                 string sql = "SELECT * FROM blabs";
                 MySqlDataAdapter daBlabs = new MySqlDataAdapter(sql, this.dcBlab); // To avoid SQL injection.
@@ -54,18 +63,24 @@ namespace BlabberApp.DataStore.Plugins
 
                 ArrayList blabs = new ArrayList();
 
-                foreach (DataRow dtRow in dsBlabs.Tables[0].Rows) {
+                foreach (DataRow dtRow in dsBlabs.Tables[0].Rows)
+                {
                     blabs.Add(DataRow2Blab(dtRow));
                 }
 
                 return blabs;
-            } catch (Exception ex) {
+            }
+            
+            catch (Exception ex)
+            {
                 throw new Exception(ex.ToString());
             }
         }
 
-        public IEntity ReadById(Guid Id) {
-            try {
+        public IEntity ReadById(Guid Id)
+        {
+            try
+            {
                 string sql = "SELECT * FROM blabs WHERE blabs.sys_id = '" + Id.ToString() + "'";
                 MySqlDataAdapter daBlab = new MySqlDataAdapter(sql, this.dcBlab); // To avoid SQL injection.
                 MySqlCommandBuilder cbBlab = new MySqlCommandBuilder(daBlab);
@@ -73,20 +88,33 @@ namespace BlabberApp.DataStore.Plugins
 
                 daBlab.Fill(dsBlab, "blabs");
 
-                DataRow row = dsBlab.Tables[0].Rows[0];
-                Blab blab = new Blab();
+                if(dsBlab.Tables[0].Rows.Count == 0)
+                {
+                    return null;
+                }
 
-                blab.Id = new Guid(row["sys_id"].ToString());
+                else
+                {
+                    DataRow row = dsBlab.Tables[0].Rows[0];
+                    Blab blab = new Blab();
 
-                return blab;
-            } catch (Exception ex) {
+                    blab.Id = new Guid(row["sys_id"].ToString());
+
+                    return blab;
+                }
+            }
+
+            catch (Exception ex)
+            {
                 throw new Exception(ex.ToString());
             }
         }
 
-        public IEnumerable ReadByUserId(string email) {
-            try {
-                string sql = "SELECT * FROM blabs WHERE blabs.user_id = '" + email.ToString() + "'";
+        public IEnumerable ReadByUserId(string Email)
+        {
+            try
+            {
+                string sql = "SELECT * FROM blabs WHERE blabs.user_id = '" + Email.ToString() + "'";
                 MySqlDataAdapter daBlabs = new MySqlDataAdapter(sql, this.dcBlab); // To avoid SQL injection.
                 MySqlCommandBuilder cbBlabs = new MySqlCommandBuilder(daBlabs);
                 DataSet dsBlabs = new DataSet();
@@ -95,43 +123,59 @@ namespace BlabberApp.DataStore.Plugins
 
                 ArrayList blabs = new ArrayList();
 
-                foreach (DataRow dtRow in dsBlabs.Tables[0].Rows) {
+                foreach (DataRow dtRow in dsBlabs.Tables[0].Rows)
+                {
                     blabs.Add(DataRow2Blab(dtRow));
                 }
 
                 return blabs;
-            } catch (Exception ex) {
+            }
+
+            catch (Exception ex)
+            {
                 throw new Exception(ex.ToString());
             }
         }
 
-        public void Update(IEntity obj)
+        public void UpdateBlabById(Guid Id, String Message)
         {
-            Blab blab = (Blab)obj;
-        }
-
-        public void Delete(IEntity obj)
-        {
-            Console.WriteLine("\n ID IS: "+obj.Id.ToString()+"\n");
             try
             {
-                string sql = "DELETE FROM blabs WHERE blabs.sys_id = '" + obj.Id.ToString() + "'";
+                string sql = "UPDATE blabs SET message = '" + Message + "' WHERE sys_id='" + Id.ToString() + "'";
                 MySqlCommand cmd = new MySqlCommand(sql, this.dcBlab);
                 cmd.ExecuteNonQuery();
-
             }
+            
+            catch(Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+        }
+
+        public void Delete(Guid Id)
+        {
+            try
+            {
+                string sql = "DELETE FROM blabs WHERE sys_id = '" + Id.ToString() + "'";
+                MySqlCommand cmd = new MySqlCommand(sql, this.dcBlab);
+                cmd.ExecuteNonQuery();
+            }
+
             catch (Exception ex)
             {
                 throw new Exception(ex.ToString());
             }
         }
         
-        public void DeleteAll() {
+        public void DeleteAll()
+        {
             string sql = "TRUNCATE TABLE blabs";
             MySqlCommand cmd = new MySqlCommand(sql, this.dcBlab);
             cmd.ExecuteNonQuery();
         }
-        private Blab DataRow2Blab(DataRow row) {
+
+        private Blab DataRow2Blab(DataRow row)
+        {
             User user = new User();
 
             user.ChangeEmail(row["user_id"].ToString());

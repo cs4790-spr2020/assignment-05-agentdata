@@ -48,15 +48,19 @@ namespace BlabberApp.DataStore.Plugins
             return null;
         }
 
-        public void Update(IEntity obj)
+        public void UpdateEmailById(Guid Id, String Email)
         {
-            this.Delete(obj);
-            this.Create(obj);
+            //TODO
         }
 
-        public void Delete(IEntity obj)
+        public void UpdateBlabById(Guid Id, String Message)
         {
-            this.buffer.Remove(obj);
+            //TODO
+        }
+
+        public void Delete(Guid Id)
+        {
+            //TODO
         }
     }
 }
