@@ -12,7 +12,7 @@ namespace BlabberApp.DataStoreTest
         private Blab _testBlab;
         private string _testEmail;
         private User _testUser;
-        private BlabAdapter _harness = new BlabAdapter(new MySqlBlab());
+        private BlabAdapter _harness = new BlabAdapter(new InMemoryBlab());
 
         [TestInitialize]
         public void Setup()
@@ -49,10 +49,25 @@ namespace BlabberApp.DataStoreTest
             _harness.Add(_testBlab);
 
             //Retrieve from DB by email
-            ArrayList actual = (ArrayList)_harness.GetByUserId (_testEmail);
+            ArrayList actual = (ArrayList)_harness.GetByUserId(_testEmail);
 
             //Assert
             Assert.AreEqual(1, actual.Count);
+        }
+
+        [TestMethod]
+        public void TestGetAll()
+        {
+
+            _harness.Add(_testBlab);
+            ArrayList initialCount = (ArrayList)_harness.GetAll();
+            int initialCountValue = initialCount.Count;
+            _harness.Add(new Blab("second blab", _testUser));
+            _harness.Add(new Blab("third blab", _testUser));
+            ArrayList countAfterAdd = (ArrayList)_harness.GetAll();
+
+            Assert.AreNotEqual(initialCountValue, countAfterAdd.Count);
+
         }
 
         [TestMethod]
@@ -60,6 +75,7 @@ namespace BlabberApp.DataStoreTest
         {
             //Add to DB
             _harness.Add(_testBlab);
+            string oldMessage = _testBlab.Message;
 
             //Update blab by Guid Id
             _harness.UpdateBlabById(_testBlab.Id, "This is a new message");
@@ -68,8 +84,8 @@ namespace BlabberApp.DataStoreTest
             Blab _updatedBlab = _harness.GetByBlabId(_testBlab.Id);
 
             //Assert
-            Assert.AreNotEqual(_testBlab.Message, _updatedBlab.Message);
-            //Assert.AreEqual("This is a new message", _updatedBlab.Message);
+            Assert.AreNotEqual(oldMessage, _updatedBlab.Message);
+            Assert.AreEqual("This is a new message", _updatedBlab.Message);
         }
 
          [TestMethod]
@@ -86,6 +102,18 @@ namespace BlabberApp.DataStoreTest
 
             //Assert
             Assert.AreEqual(null, actual);
+        }
+
+        [TestMethod]
+        public void TestUpdateNonExistentBlab()
+        {
+            _harness.UpdateBlabById(new System.Guid(), "fake message");
+        }
+
+        [TestMethod]
+        public void TestDeleteNonExistentBlab()
+        {
+            _harness.Remove(new Blab());
         }
     }
 }

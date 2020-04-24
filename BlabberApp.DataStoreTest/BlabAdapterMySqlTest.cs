@@ -56,6 +56,17 @@ namespace BlabberApp.DataStoreTest
         }
 
         [TestMethod]
+        public void TestGetAll()
+        {
+            ArrayList initialCount = (ArrayList)_harness.GetAll();
+            _harness.Add(_testBlab);
+            ArrayList countAfterAdd = (ArrayList)_harness.GetAll();
+
+            Assert.AreNotEqual(initialCount.Count, countAfterAdd.Count);
+
+        }
+
+        [TestMethod]
         public void TestAddAndUpdateBlab()
         {
             //Add to DB
@@ -86,6 +97,18 @@ namespace BlabberApp.DataStoreTest
 
             //Assert
             Assert.AreEqual(null, actual);
+        }
+
+        [TestMethod]
+        public void TestUpdateNonExistentBlab()
+        {
+            _harness.UpdateBlabById(new System.Guid(), "fake message");
+        }
+
+        [TestMethod]
+        public void TestDeleteNonExistentBlab()
+        {
+            _harness.Remove(new Blab());
         }
     }
 }

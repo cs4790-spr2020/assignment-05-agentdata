@@ -22,7 +22,7 @@ namespace BlabberApp.Services
                 return new MySqlBlab();
             }
 
-            return new InMemory();
+            return new InMemoryBlab();
         }
 
         public BlabService CreateBlabService(BlabAdapter adapter = null)

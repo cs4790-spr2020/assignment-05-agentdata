@@ -22,7 +22,7 @@ namespace BlabberApp.Services
                 return new MySqlUser();
             }
 
-            return new InMemory();
+            return new InMemoryUser();
         }
 
         public UserService CreateUserService(UserAdapter adapter = null)

@@ -19,19 +19,9 @@ namespace BlabberApp.DataStore.Adapters
            this.plugin.Create(blab);
        }
 
-       public void Remove(Blab blab)
-       {
-           this.plugin.Delete(blab.Id);
-       }
-
-       public void UpdateBlabById(Guid Id, String Message)
-       {
-           this.plugin.UpdateBlabById(Id, Message);
-       }
-
        public IEnumerable GetAll()
        {
-           return this.plugin.ReadAll();
+           return (ArrayList)this.plugin.ReadAll();
        }
 
        public Blab GetByBlabId(Guid Id)
@@ -42,6 +32,16 @@ namespace BlabberApp.DataStore.Adapters
        public IEnumerable GetByUserId(string Email)
        {
            return (ArrayList)this.plugin.ReadByUserId(Email);
+       }
+
+       public void UpdateBlabById(Guid Id, String Message)
+       {
+           this.plugin.UpdateBlabById(Id, Message);
+       }
+
+        public void Remove(Blab blab)
+       {
+           this.plugin.Delete(blab.Id);
        }
     }
 }

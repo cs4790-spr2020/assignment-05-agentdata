@@ -11,7 +11,7 @@ namespace BlabberApp.DataStoreTest
     public class UserAdapter_InMemory_UnitTests 
     {
         private User _user;
-        private UserAdapter _harness = new UserAdapter(new MySqlUser());
+        private UserAdapter _harness = new UserAdapter(new InMemoryUser());
 
         [TestInitialize]
         public void Setup()
@@ -28,17 +28,34 @@ namespace BlabberApp.DataStoreTest
         }
 
         [TestMethod]
-        public void TestAddAndGetUser()
+        public void TestAddAndGetUserByID()
         {
             //Add user to DB
             _harness.Add(_user);
 
             //Retrieve user from DB by Guid Id
             User actual = _harness.GetById(_user.Id);
+            User blankUser = _harness.GetById(new System.Guid());
 
             //Assert IDs and Email match
             Assert.AreEqual(_user.Id.ToString(), actual.Id.ToString());
             Assert.AreEqual(_user.Email, actual.Email);
+            Assert.AreEqual(null, blankUser);
+        }
+
+        [TestMethod]
+        public void TestAddAndGetUserByEmail()
+        {
+            //Add user to DB
+            _harness.Add(_user);
+
+            //Retrieve user from DB by Guid Id
+            User actual = _harness.GetByEmail(_user.Email);
+            User blankUser = _harness.GetByEmail("unknown");
+            //Assert IDs and Email match
+            Assert.AreEqual(_user.Id.ToString(), actual.Id.ToString());
+            Assert.AreEqual(_user.Email, actual.Email);
+            Assert.AreEqual(null,blankUser);
         }
 
         [TestMethod]
@@ -63,6 +80,7 @@ namespace BlabberApp.DataStoreTest
         {
             //Add user to DB
             _harness.Add(_user);
+            string oldEmail = _user.Email;
 
             //Update user email
             _harness.UpdateEmailById(_user.Id, "new-testUpdate@test.com");
@@ -71,8 +89,15 @@ namespace BlabberApp.DataStoreTest
             User _modifiedUser = _harness.GetById(_user.Id);
 
             //Assert
-            Assert.AreNotEqual(_modifiedUser.Email.ToString(), _user.Email.ToString());
-            Assert.AreEqual(_modifiedUser.Email.ToString(), "new-testUpdate@test.com");
+            Assert.AreNotEqual(_modifiedUser.Email, oldEmail);
+            Assert.AreEqual(_modifiedUser.Email, "new-testUpdate@test.com");
         }
+
+        [TestMethod]
+        public void TestUpdateNonExistentUser()
+        {
+            _harness.UpdateEmailById(new System.Guid(), "fake message");
+        }
+         
     }
 }

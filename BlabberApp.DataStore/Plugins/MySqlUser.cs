@@ -40,9 +40,7 @@ namespace BlabberApp.DataStore.Plugins
                      + "', '" + now.ToString("yyyy-MM-dd HH:mm:ss") + "')";
                 MySqlCommand cmd = new MySqlCommand(sql, _dcUser);
                 cmd.ExecuteNonQuery();
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 throw new Exception(ex.ToString());
             }
         }
@@ -61,9 +59,7 @@ namespace BlabberApp.DataStore.Plugins
                 DataRow row = dsUser.Tables[0].Rows[0];
 
                 return DataRow2User(row);
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 throw new Exception(ex.ToString());
             }
         }
@@ -82,9 +78,7 @@ namespace BlabberApp.DataStore.Plugins
                 DataRow row = dsUser.Tables[0].Rows[0];
                 
                 return DataRow2User(row);
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 throw new Exception(ex.ToString());
             }
         }
@@ -108,9 +102,7 @@ namespace BlabberApp.DataStore.Plugins
                 }
 
                 return users;
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 throw new Exception(ex.ToString());
             }
         }

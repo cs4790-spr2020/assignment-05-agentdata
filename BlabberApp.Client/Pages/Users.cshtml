@@ -10,6 +10,6 @@
 <h1>@ViewData["Title"]</h1>
 <p>
     @foreach (@User user in @UserService.GetAll()) {
-        <li>@user.Email.ToString() - </li>
+        <li>@user.Email.ToString() - Registered on @user.RegisterDTTM.ToString()</li>
     }
 </p>

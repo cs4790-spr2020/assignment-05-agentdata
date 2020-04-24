@@ -8,17 +8,20 @@
 }
 
 <form method="post">
-        <label>Blab</label><input type="text" name="message">
-        <label>Email</label><input type="email" name="emailaddress">
-        </br><input type="submit">
-    </form>
+    <label>Blab:</label><input type="text" name="message">
+    </br><label>Email:</label><input type="email" name="emailaddress">
+    </br><input type="submit">
+</form>
 
-
+</br></br>
 <section id="main">
     <h1>Feed</h1>
     <div id="content">
-        @foreach (@Blab blab in @BlabService.GetAll()) {
-            <li>@blab.Message.ToString() - @blab.User.Email.ToString()</li>
-        } 
+        <table border="1px">
+            <tr><b><th>Blab</th><th>User</th></b></tr>
+            @foreach (@Blab blab in @BlabService.GetAll()) {
+                <tr><td><font style="font-size:18px">@blab.Message.ToString()</font></td> - <td>@blab.User.Email.ToString()</td></tr>
+            } 
+        </table>
     </div>
 </section>

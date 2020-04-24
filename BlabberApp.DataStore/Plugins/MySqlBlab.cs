@@ -17,9 +17,7 @@ namespace BlabberApp.DataStore.Plugins
             try
             {
                 this.dcBlab.Open();
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 throw new Exception(ex.ToString());
             }
         }
@@ -42,9 +40,7 @@ namespace BlabberApp.DataStore.Plugins
                      + blab.User.Email + "')";
                 MySqlCommand cmd = new MySqlCommand(sql, this.dcBlab);
                 cmd.ExecuteNonQuery();
-            } 
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 throw new Exception(ex.ToString());
             }
         }
@@ -69,10 +65,7 @@ namespace BlabberApp.DataStore.Plugins
                 }
 
                 return blabs;
-            }
-            
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 throw new Exception(ex.ToString());
             }
         }
@@ -102,10 +95,7 @@ namespace BlabberApp.DataStore.Plugins
 
                     return blab;
                 }
-            }
-
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 throw new Exception(ex.ToString());
             }
         }
@@ -129,10 +119,7 @@ namespace BlabberApp.DataStore.Plugins
                 }
 
                 return blabs;
-            }
-
-            catch (Exception ex)
-            {
+            } catch (Exception ex){
                 throw new Exception(ex.ToString());
             }
         }
@@ -144,10 +131,7 @@ namespace BlabberApp.DataStore.Plugins
                 string sql = "UPDATE blabs SET message = '" + Message + "' WHERE sys_id='" + Id.ToString() + "'";
                 MySqlCommand cmd = new MySqlCommand(sql, this.dcBlab);
                 cmd.ExecuteNonQuery();
-            }
-            
-            catch(Exception ex)
-            {
+            } catch(Exception ex){
                 throw new Exception(ex.ToString());
             }
         }
@@ -159,10 +143,7 @@ namespace BlabberApp.DataStore.Plugins
                 string sql = "DELETE FROM blabs WHERE sys_id = '" + Id.ToString() + "'";
                 MySqlCommand cmd = new MySqlCommand(sql, this.dcBlab);
                 cmd.ExecuteNonQuery();
-            }
-
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 throw new Exception(ex.ToString());
             }
         }

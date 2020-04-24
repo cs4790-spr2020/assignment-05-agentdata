@@ -28,13 +28,27 @@ namespace BlabberApp.DataStoreTest
         }
 
         [TestMethod]
-        public void TestAddAndGetUser()
+        public void TestAddAndGetUserByID()
         {
             //Add user to DB
             _harness.Add(_user);
 
             //Retrieve user from DB by Guid Id
             User actual = _harness.GetById(_user.Id);
+
+            //Assert IDs and Email match
+            Assert.AreEqual(_user.Id.ToString(), actual.Id.ToString());
+            Assert.AreEqual(_user.Email, actual.Email);
+        }
+
+        [TestMethod]
+        public void TestAddAndGetUserByEmail()
+        {
+            //Add user to DB
+            _harness.Add(_user);
+
+            //Retrieve user from DB by Guid Id
+            User actual = _harness.GetByEmail(_user.Email);
 
             //Assert IDs and Email match
             Assert.AreEqual(_user.Id.ToString(), actual.Id.ToString());
@@ -73,6 +87,12 @@ namespace BlabberApp.DataStoreTest
             //Assert
             Assert.AreNotEqual(_modifiedUser.Email.ToString(), _user.Email.ToString());
             Assert.AreEqual(_modifiedUser.Email.ToString(), "new-testUpdate@test.com");
+        }
+
+        [TestMethod]
+        public void TestUpdateNonExistentUser()
+        {
+            _harness.UpdateEmailById(new System.Guid(), "fake message");
         }
     }
 }
